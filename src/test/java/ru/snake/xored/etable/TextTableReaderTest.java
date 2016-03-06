@@ -32,7 +32,7 @@ public class TextTableReaderTest {
 	public void shouldWriteTable2() throws Exception {
 		Table table;
 		ByteArrayInputStream stream = new ByteArrayInputStream(
-				"3\t4\n12\t=C1\t3\t'Sample\n=A0-B0*C0/5\t=A1*B0\t=B2-C2\t'Spread\n'Test\t=4-3\t5\t'Sheet\n"
+				"3\t4\n12\t=C1\t3\t'Sample\n=A0+B0*C0/5\t=A1*B0\t=B2-C2\t'Spread\n'Test\t=4-3\t5\t'Sheet\n"
 						.getBytes());
 
 		try (TextTableReader reader = new TextTableReader(stream)) {
