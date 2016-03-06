@@ -1,5 +1,11 @@
 package ru.snake.xored.etable.error;
 
+/**
+ * Cell error value
+ * 
+ * @author snake
+ *
+ */
 public interface CellError {
 
 	/**

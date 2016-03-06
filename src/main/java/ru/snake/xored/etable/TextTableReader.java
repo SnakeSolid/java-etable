@@ -9,6 +9,12 @@ import ru.snake.xored.etable.expression.Expression;
 import ru.snake.xored.etable.parser.Parser;
 import ru.snake.xored.etable.parser.ParserException;
 
+/**
+ * Reader from plain text source for table
+ * 
+ * @author snake
+ *
+ */
 public class TextTableReader implements AutoCloseable {
 
 	private static final String PREFIX_STRING = "'";

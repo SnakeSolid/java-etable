@@ -2,6 +2,12 @@ package ru.snake.xored.etable.value;
 
 import ru.snake.xored.etable.error.CellError;
 
+/**
+ * Encapsulates all possible value types for table cell
+ * 
+ * @author snake
+ *
+ */
 public interface CellValue {
 
 	/**

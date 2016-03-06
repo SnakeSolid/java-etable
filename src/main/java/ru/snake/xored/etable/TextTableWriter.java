@@ -5,6 +5,12 @@ import java.io.PrintStream;
 
 import ru.snake.xored.etable.value.CellValue;
 
+/**
+ * Writer to plain text stream for table
+ * 
+ * @author snake
+ *
+ */
 public class TextTableWriter implements AutoCloseable {
 
 	private final PrintStream stream;

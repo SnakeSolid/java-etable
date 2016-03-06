@@ -9,6 +9,12 @@ import ru.snake.xored.etable.expression.Expression;
 import ru.snake.xored.etable.value.CellValue;
 import ru.snake.xored.etable.value.CellValueType;
 
+/**
+ * Single thread expression evaluator. Evaluate all expressions in the table
+ * 
+ * @author snake
+ *
+ */
 public class SimpleEvaluator {
 
 	private final Table table;

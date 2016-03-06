@@ -1,5 +1,11 @@
 package ru.snake.xored.etable;
 
+/**
+ * Reference to table cell
+ * 
+ * @author snake
+ *
+ */
 public class CellReference implements Comparable<CellReference> {
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -47,10 +53,20 @@ public class CellReference implements Comparable<CellReference> {
 		this.row = row;
 	}
 
+	/**
+	 * Return column
+	 * 
+	 * @return
+	 */
 	public int getColumn() {
 		return column;
 	}
 
+	/**
+	 * Returns row
+	 * 
+	 * @return
+	 */
 	public int getRow() {
 		return row;
 	}
