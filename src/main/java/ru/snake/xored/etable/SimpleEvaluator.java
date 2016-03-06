@@ -1,11 +1,6 @@
 package ru.snake.xored.etable;
 
-import java.util.Deque;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,6 +13,11 @@ public class SimpleEvaluator {
 
 	private final Table table;
 
+	/**
+	 * Constructs evaluator for the table without expressions evaluation
+	 * 
+	 * @param table
+	 */
 	public SimpleEvaluator(Table table) {
 		this.table = table;
 	}
@@ -57,75 +57,69 @@ public class SimpleEvaluator {
 	 * @param reference
 	 */
 	private void evaluateExpression(CellReference reference) {
-		CellValue currentValue = table.getValue(reference);
+		Set<CellReference> pending = new HashSet<>();
 
-		if (currentValue.getType() != CellValueType.EMPTY) {
+		evaluateExpressionRec(reference, pending);
+	}
+
+	/**
+	 * Walk expressions by references in depth and check circular dependencies. Evaluate every possible expression in
+	 * hierarchical order.
+	 * 
+	 * @param reference
+	 * @param pending
+	 *            currently pended evaluation expressions
+	 */
+	private void evaluateExpressionRec(CellReference reference,
+			Set<CellReference> pending) {
+		if (!isCellEmpty(reference)) {
 			return;
 		}
 
-		Set<CellReference> visited = new HashSet<>();
-		Queue<CellReference> pending = new LinkedList<>();
-		Map<CellReference, CellReference> parents = new HashMap<>();
-		Deque<CellReference> evaluationQueue = new LinkedList<>();
+		Expression expression = table.getExpression(reference);
 
 		pending.add(reference);
 
-		while (!pending.isEmpty()) {
-			CellReference currentReference = pending.poll();
+		for (CellReference referenced : expression.getReferences()) {
+			if (pending.contains(referenced)) {
+				processCircularError(pending);
 
-			if (table.hasExpression(currentReference)) {
-				Expression expression = table.getExpression(currentReference);
-
-				for (CellReference referenced : expression.getReferences()) {
-					if (visited.contains(referenced)) {
-						processCircularError(parents, currentReference);
-
-						return;
-					}
-
-					if (!parents.containsKey(referenced)) {
-						visited.add(currentReference);
-						pending.add(referenced);
-						parents.put(referenced, currentReference);
-					}
-				}
-
-				evaluationQueue.addLast(currentReference);
+				break;
 			}
+
+			evaluateExpressionRec(referenced, pending);
 		}
 
-		// Walk references in reverse topological order and evaluate
-		while (!evaluationQueue.isEmpty()) {
-			CellReference currentReference = evaluationQueue.pollLast();
-			CellValue value = table.getValue(currentReference);
+		pending.remove(reference);
 
-			// Evaluate expression only if value is empty, else we already evaluated this expression
-			if (value.getType() == CellValueType.EMPTY) {
-				Expression expression = table.getExpression(currentReference);
+		if (isCellEmpty(reference)) {
+			CellValue value = expression.evaluate(table);
 
-				value = expression.evaluate(table);
-
-				table.setValue(currentReference, value);
-			}
+			table.setValue(reference, value);
 		}
 	}
 
 	/**
-	 * Walk by reference hierarchy and set error for all cells
+	 * Set error value for all cells referenced from the references
 	 * 
-	 * @param parents
-	 *            map where value reference is parent for key reference
-	 * @param currentReference
+	 * @param references
 	 */
-	private void processCircularError(Map<CellReference, CellReference> parents,
-			CellReference currentReference) {
-		CellReference parenReference = currentReference;
-
-		while (parenReference != null) {
-			table.setError(parenReference, new CircularCellError());
-
-			parenReference = parents.get(parenReference);
+	private void processCircularError(Set<CellReference> references) {
+		for (CellReference reference : references) {
+			table.setError(reference, new CircularCellError());
 		}
+	}
+
+	/**
+	 * Check that cell has empty value
+	 * 
+	 * @param reference
+	 * @return
+	 */
+	private boolean isCellEmpty(CellReference reference) {
+		CellValue currentValue = table.getValue(reference);
+
+		return currentValue.getType() == CellValueType.EMPTY;
 	}
 
 	/**
