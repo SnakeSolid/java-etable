@@ -1,8 +1,9 @@
 package ru.snake.xored.etable;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
-import java.util.TreeSet;
 
 import ru.snake.xored.etable.error.CircularCellError;
 import ru.snake.xored.etable.expression.Expression;
@@ -47,7 +48,7 @@ public class SimpleEvaluator {
 	 * @param reference
 	 */
 	public void evaluate() {
-		Set<CellReference> expressionCells = findExpressions();
+		Collection<CellReference> expressionCells = findExpressions();
 
 		prepareCells(expressionCells);
 
@@ -133,7 +134,7 @@ public class SimpleEvaluator {
 	 * 
 	 * @param expressionCells
 	 */
-	private void prepareCells(Set<CellReference> expressionCells) {
+	private void prepareCells(Collection<CellReference> expressionCells) {
 		for (CellReference reference : expressionCells) {
 			table.setEmpty(reference);
 		}
@@ -144,8 +145,8 @@ public class SimpleEvaluator {
 	 * 
 	 * @return
 	 */
-	private Set<CellReference> findExpressions() {
-		Set<CellReference> expressionCells = new TreeSet<>();
+	private Collection<CellReference> findExpressions() {
+		Collection<CellReference> expressionCells = new LinkedList<>();
 
 		for (int j = 0; j < table.getColumns(); j++) {
 			for (int i = 0; i < table.getRows(); i++) {
