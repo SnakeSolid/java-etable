@@ -6,6 +6,20 @@ import ru.snake.xored.etable.value.CellValue;
 public interface Table {
 
 	/**
+	 * Returns number of columns in table
+	 * 
+	 * @return
+	 */
+	public int getColumns();
+
+	/**
+	 * Returns number of rows in table
+	 * 
+	 * @return
+	 */
+	public int getRows();
+
+	/**
 	 * Returns table cell by reference
 	 * 
 	 * @param reference
@@ -44,5 +58,43 @@ public interface Table {
 	 * @return
 	 */
 	public Expression getExpression(CellReference reference);
+
+	/**
+	 * Replace cells value to empty value
+	 * 
+	 * @param reference
+	 */
+	public void setEmpty(CellReference reference);
+
+	/**
+	 * Replace cells value to integer
+	 * 
+	 * @param reference
+	 * @param value
+	 */
+	public void setValue(CellReference reference, int value);
+
+	/**
+	 * Replace cells value to string
+	 * 
+	 * @param reference
+	 * @param value
+	 */
+	public void setValue(CellReference reference, String value);
+
+	/**
+	 * Set cells expression by reference
+	 * 
+	 * @param reference
+	 * @param expression
+	 */
+	public void setExpression(CellReference reference, Expression expression);
+
+	/**
+	 * Remove cells expression by reference
+	 * 
+	 * @param reference
+	 */
+	public void removeExpression(CellReference reference);
 
 }
