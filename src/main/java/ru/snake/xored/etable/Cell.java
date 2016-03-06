@@ -48,4 +48,24 @@ public class Cell {
 		this.expression = expression;
 	}
 
+	@Override
+	public String toString() {
+		if (hasExpression()) {
+			return "=" + this.expression.toString();
+		} else if (hasValue()) {
+			switch (this.value.getType()) {
+			case EMPTY:
+				return this.value.toString();
+			case INTEGER:
+				return this.value.toString();
+			case STRING:
+				return "'" + this.value.toString();
+			case ERROR:
+				return this.value.toString();
+			}
+		}
+
+		return "<NONE>";
+	}
+
 }

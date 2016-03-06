@@ -196,7 +196,8 @@ public class SimpleTableTest {
 	 * 
 	 * @param table
 	 * @param reference
-	 * @param expected
+	 * @param names
+	 *            expected expressions references
 	 */
 	private void assertExpressionError(Table table, CellReference reference,
 			String... names) {
@@ -223,6 +224,8 @@ public class SimpleTableTest {
 	 * @param table
 	 * @param reference
 	 * @param expected
+	 * @param names
+	 *            expected expressions references
 	 */
 	private void assertExpression(Table table, CellReference reference,
 			int expected, String... names) {
@@ -247,7 +250,8 @@ public class SimpleTableTest {
 	/**
 	 * Check that value is empty
 	 * 
-	 * @param value
+	 * @param table
+	 * @param reference
 	 */
 	private void assertEmpty(Table table, CellReference reference) {
 		assertThat(table.hasValue(reference), equalTo(true));
@@ -260,7 +264,8 @@ public class SimpleTableTest {
 	/**
 	 * Check that value contains expected integer
 	 * 
-	 * @param value
+	 * @param table
+	 * @param reference
 	 * @param expected
 	 */
 	private void assertValue(Table table, CellReference reference,
@@ -276,7 +281,8 @@ public class SimpleTableTest {
 	/**
 	 * Check that value contains expected string
 	 * 
-	 * @param value
+	 * @param table
+	 * @param reference
 	 * @param expected
 	 */
 	private void assertValue(Table table, CellReference reference,

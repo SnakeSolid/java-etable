@@ -1,5 +1,6 @@
 package ru.snake.xored.etable;
 
+import ru.snake.xored.etable.error.CellError;
 import ru.snake.xored.etable.expression.Expression;
 import ru.snake.xored.etable.value.CellValue;
 
@@ -81,6 +82,22 @@ public interface Table {
 	 * @param value
 	 */
 	public void setValue(CellReference reference, String value);
+
+	/**
+	 * Replace cells value to error
+	 * 
+	 * @param reference
+	 * @param value
+	 */
+	public void setError(CellReference reference, CellError error);
+
+	/**
+	 * Replace cells value
+	 * 
+	 * @param reference
+	 * @param value
+	 */
+	public void setValue(CellReference reference, CellValue value);
 
 	/**
 	 * Set cells expression by reference

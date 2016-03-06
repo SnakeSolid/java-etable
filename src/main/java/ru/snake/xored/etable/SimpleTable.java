@@ -1,8 +1,10 @@
 package ru.snake.xored.etable;
 
+import ru.snake.xored.etable.error.CellError;
 import ru.snake.xored.etable.expression.Expression;
 import ru.snake.xored.etable.value.CellValue;
 import ru.snake.xored.etable.value.EmptyValue;
+import ru.snake.xored.etable.value.ErrorValue;
 import ru.snake.xored.etable.value.IntegerValue;
 import ru.snake.xored.etable.value.StringValue;
 
@@ -77,17 +79,27 @@ public class SimpleTable implements Table {
 
 	@Override
 	public void setEmpty(CellReference reference) {
-		getCell(reference).setValue(new EmptyValue());
+		setValue(reference, new EmptyValue());
 	}
 
 	@Override
 	public void setValue(CellReference reference, int value) {
-		getCell(reference).setValue(new IntegerValue(value));
+		setValue(reference, new IntegerValue(value));
 	}
 
 	@Override
 	public void setValue(CellReference reference, String value) {
-		getCell(reference).setValue(new StringValue(value));
+		setValue(reference, new StringValue(value));
+	}
+
+	@Override
+	public void setError(CellReference reference, CellError error) {
+		setValue(reference, new ErrorValue(error));
+	}
+
+	@Override
+	public void setValue(CellReference reference, CellValue value) {
+		getCell(reference).setValue(value);
 	}
 
 	@Override
