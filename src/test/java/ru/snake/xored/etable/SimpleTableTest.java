@@ -49,6 +49,30 @@ public class SimpleTableTest {
 		new SimpleTable(5, 10);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowException7() throws ParserException {
+		Table table = new SimpleTable(5, 5);
+		CellReference reference = new CellReference(5, 7);
+
+		table.getCell(reference);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowException8() throws ParserException {
+		Table table = new SimpleTable(5, 5);
+		CellReference reference = new CellReference(7, 5);
+
+		table.getCell(reference);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowException9() throws ParserException {
+		Table table = new SimpleTable(5, 5);
+		CellReference reference = new CellReference(7, 7);
+
+		table.getCell(reference);
+	}
+
 	@Test()
 	public void shouldCreateTable1() throws ParserException {
 		Table table = new SimpleTable(1, 1);

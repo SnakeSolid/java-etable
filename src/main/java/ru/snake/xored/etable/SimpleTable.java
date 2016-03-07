@@ -54,6 +54,8 @@ public class SimpleTable implements Table {
 
 	@Override
 	public Cell getCell(CellReference reference) {
+		checkBounds(reference);
+
 		return this.cells[reference.getColumn()][reference.getRow()];
 	}
 
@@ -110,6 +112,23 @@ public class SimpleTable implements Table {
 	@Override
 	public void removeExpression(CellReference reference) {
 		getCell(reference).setExpression(null);
-	};
+	}
+
+	/**
+	 * Check that referenced cell inside the table
+	 * 
+	 * @param reference
+	 */
+	private void checkBounds(CellReference reference) {
+		if (reference.getColumn() >= this.columns) {
+			throw new IllegalArgumentException(
+					"Column index should be less than " + this.columns);
+		}
+
+		if (reference.getRow() >= this.rows) {
+			throw new IllegalArgumentException(
+					"Row index should be less than " + this.rows);
+		}
+	}
 
 }
