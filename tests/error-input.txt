@@ -1,0 +1,6 @@
+5	2
+'String without apostrophe	string
+'Illegal reference	=A0
+'Empty expression	=
+'Expression with link to error	=B1
+'Expression with link to itself	=B5
