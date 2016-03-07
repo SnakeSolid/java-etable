@@ -7,6 +7,10 @@ public class Main {
 
 		try (TextTableReader reader = new TextTableReader(System.in)) {
 			table = reader.read();
+		} catch (IllegalArgumentException e) {
+			System.err.println("Error reading table: " + e.getMessage());
+
+			return;
 		}
 
 		SimpleEvaluator.evaluate(table);

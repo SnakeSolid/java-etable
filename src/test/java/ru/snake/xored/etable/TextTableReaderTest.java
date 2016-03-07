@@ -14,6 +14,16 @@ import ru.snake.xored.etable.value.CellValueType;
 
 public class TextTableReaderTest {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowException() throws Exception {
+		ByteArrayInputStream stream = new ByteArrayInputStream(
+				"0\t0\n".getBytes());
+
+		try (TextTableReader reader = new TextTableReader(stream)) {
+			reader.read();
+		}
+	}
+
 	@Test()
 	public void shouldWriteTable1() throws Exception {
 		Table table;
