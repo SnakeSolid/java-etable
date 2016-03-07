@@ -12,7 +12,7 @@ evaluate from left to right.
 
 Cell can contains one of value types:
 
-* number - integer value without sing;
+* number - integer value without sign;
 * string - string value
 * expression - simple expression with numbers, references to other cells and operations.
 
