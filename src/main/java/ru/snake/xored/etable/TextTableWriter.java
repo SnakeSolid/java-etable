@@ -52,24 +52,7 @@ public class TextTableWriter implements AutoCloseable {
 				CellReference reference = new CellReference(i, j);
 
 				if (table.hasValue(reference)) {
-					CellValue value = table.getValue(reference);
-
-					switch (value.getType()) {
-					case INTEGER:
-						this.stream.print(value.getInteger());
-						break;
-
-					case STRING:
-						this.stream.print(value.getString());
-						break;
-
-					case ERROR:
-						this.stream.print(value.getError().getIdentifier());
-						break;
-
-					default:
-						break;
-					}
+					writeCellValue(table.getValue(reference));
 				}
 			}
 
@@ -77,6 +60,33 @@ public class TextTableWriter implements AutoCloseable {
 		}
 
 		this.stream.flush();
+	}
+
+	/**
+	 * Write cell value to underlying stream. This method writes only value of cell, if cell contains expression it will
+	 * be ignored. Values write as their string representation except for errors. Errors will be written as their
+	 * identifier
+	 * 
+	 * @param table
+	 * @param reference
+	 */
+	private void writeCellValue(CellValue value) {
+		switch (value.getType()) {
+		case INTEGER:
+			this.stream.print(value.getInteger());
+			break;
+
+		case STRING:
+			this.stream.print(value.getString());
+			break;
+
+		case ERROR:
+			this.stream.print(value.getError().getIdentifier());
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override
