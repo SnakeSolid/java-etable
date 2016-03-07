@@ -32,7 +32,7 @@ public class TextTableReaderTest {
 	public void shouldWriteTable2() throws Exception {
 		Table table;
 		ByteArrayInputStream stream = new ByteArrayInputStream(
-				"3\t4\n12\t=C1\t3\t'Sample\n=A0+B0*C0/5\t=A1*B0\t=B2-C2\t'Spread\n'Test\t=4-3\t5\t'Sheet\n"
+				"3\t4\n12\t=C2\t3\t'Sample\n=A1+B1*C1/5\t=A2*B1\t=B3-C3\t'Spread\n'Test\t=4-3\t5\t'Sheet\n"
 						.getBytes());
 
 		try (TextTableReader reader = new TextTableReader(stream)) {
@@ -40,18 +40,18 @@ public class TextTableReaderTest {
 		}
 
 		assertSize(table, 4, 3);
-		assertValue(table, new CellReference("A0"), 12);
-		assertEmpty(table, new CellReference("B0"));
-		assertValue(table, new CellReference("C0"), 3);
-		assertValue(table, new CellReference("D0"), "Sample");
-		assertEmpty(table, new CellReference("A1"));
+		assertValue(table, new CellReference("A1"), 12);
 		assertEmpty(table, new CellReference("B1"));
-		assertEmpty(table, new CellReference("C1"));
-		assertValue(table, new CellReference("D1"), "Spread");
-		assertValue(table, new CellReference("A2"), "Test");
+		assertValue(table, new CellReference("C1"), 3);
+		assertValue(table, new CellReference("D1"), "Sample");
+		assertEmpty(table, new CellReference("A2"));
 		assertEmpty(table, new CellReference("B2"));
-		assertValue(table, new CellReference("C2"), 5);
-		assertValue(table, new CellReference("D2"), "Sheet");
+		assertEmpty(table, new CellReference("C2"));
+		assertValue(table, new CellReference("D2"), "Spread");
+		assertValue(table, new CellReference("A3"), "Test");
+		assertEmpty(table, new CellReference("B3"));
+		assertValue(table, new CellReference("C3"), 5);
+		assertValue(table, new CellReference("D3"), "Sheet");
 	}
 
 	/**

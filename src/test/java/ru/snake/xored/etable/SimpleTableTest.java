@@ -100,119 +100,119 @@ public class SimpleTableTest {
 	@Test()
 	public void shouldSetEmptyValue() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference c2 = new CellReference(2, 2);
+		CellReference c3 = new CellReference(2, 2);
 
-		table.setValue(c2, 123);
-		table.setValue(c2, "TEST");
-		table.setEmpty(c2);
+		table.setValue(c3, 123);
+		table.setValue(c3, "TEST");
+		table.setEmpty(c3);
 
-		assertEmpty(table, c2);
+		assertEmpty(table, c3);
 	}
 
 	@Test()
 	public void shouldSetIntegerValue() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference c2 = new CellReference(2, 2);
+		CellReference c3 = new CellReference(2, 2);
 
-		table.setValue(c2, 123);
+		table.setValue(c3, 123);
 
-		assertValue(table, c2, 123);
+		assertValue(table, c3, 123);
 	}
 
 	@Test()
 	public void shouldSetStringValue() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference c2 = new CellReference(2, 2);
+		CellReference c3 = new CellReference(2, 2);
 
-		table.setValue(c2, "TEST");
+		table.setValue(c3, "TEST");
 
-		assertValue(table, c2, "TEST");
+		assertValue(table, c3, "TEST");
 	}
 
 	@Test()
 	public void shouldSetExpression() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference c2 = new CellReference(2, 2);
+		CellReference c3 = new CellReference(2, 2);
 
-		table.setExpression(c2, new ConstantExpression(123));
+		table.setExpression(c3, new ConstantExpression(123));
 
-		assertExpression(table, c2, 123);
+		assertExpression(table, c3, 123);
 	}
 
 	@Test()
 	public void shouldRemoveExpression() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference c2 = new CellReference(2, 2);
+		CellReference c3 = new CellReference(2, 2);
 
-		table.setExpression(c2, new ConstantExpression(123));
+		table.setExpression(c3, new ConstantExpression(123));
 
-		assertExpression(table, c2, 123);
+		assertExpression(table, c3, 123);
 
-		table.removeExpression(c2);
+		table.removeExpression(c3);
 
-		assertThat(table.hasExpression(c2), equalTo(false));
+		assertThat(table.hasExpression(c3), equalTo(false));
 	}
 
 	@Test()
 	public void shouldEvaluateExpression1() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference a2 = new CellReference(0, 2);
-		CellReference b3 = new CellReference(1, 3);
-		CellReference c4 = new CellReference(2, 4);
+		CellReference a3 = new CellReference(0, 2);
+		CellReference b4 = new CellReference(1, 3);
+		CellReference c5 = new CellReference(2, 4);
 
-		table.setExpression(a2, new Parser("b3+c4").parse());
-		table.setValue(b3, 123);
-		table.setValue(c4, 456);
+		table.setExpression(a3, new Parser("b4+c5").parse());
+		table.setValue(b4, 123);
+		table.setValue(c5, 456);
 
-		assertExpression(table, a2, 123 + 456);
+		assertExpression(table, a3, 123 + 456);
 	}
 
 	@Test()
 	public void shouldEvaluateExpression2() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference a2 = new CellReference(0, 2);
-		CellReference b3 = new CellReference(1, 3);
+		CellReference a3 = new CellReference(0, 2);
+		CellReference b4 = new CellReference(1, 3);
 
-		table.setExpression(a2, new Parser("b3+123").parse());
-		table.setValue(b3, 123);
+		table.setExpression(a3, new Parser("b4+123").parse());
+		table.setValue(b4, 123);
 
-		assertExpression(table, a2, 123 + 123);
+		assertExpression(table, a3, 123 + 123);
 	}
 
 	@Test()
 	public void shouldEvaluateExpression3() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference a2 = new CellReference(0, 2);
+		CellReference a3 = new CellReference(0, 2);
 
-		table.setExpression(a2, new Parser("123").parse());
+		table.setExpression(a3, new Parser("123").parse());
 
-		assertExpression(table, a2, 123);
+		assertExpression(table, a3, 123);
 	}
 
 	@Test()
 	public void shouldEvaluateError1() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference a2 = new CellReference(0, 2);
-		CellReference b3 = new CellReference(1, 3);
-		CellReference c4 = new CellReference(2, 4);
+		CellReference a3 = new CellReference(0, 2);
+		CellReference b4 = new CellReference(1, 3);
+		CellReference c5 = new CellReference(2, 4);
 
-		table.setExpression(a2, new Parser("b3+c4").parse());
-		table.setValue(b3, 123);
-		table.setValue(c4, "TEST");
+		table.setExpression(a3, new Parser("b4+c5").parse());
+		table.setValue(b4, 123);
+		table.setValue(c5, "TEST");
 
-		assertExpressionError(table, a2);
+		assertExpressionError(table, a3);
 	}
 
 	@Test()
 	public void shouldEvaluateError2() throws ParserException {
 		Table table = new SimpleTable(5, 5);
-		CellReference a2 = new CellReference(0, 2);
-		CellReference b3 = new CellReference(1, 3);
+		CellReference a3 = new CellReference(0, 2);
+		CellReference b4 = new CellReference(1, 3);
 
-		table.setExpression(a2, new Parser("b3+c4").parse());
-		table.setValue(b3, 123);
+		table.setExpression(a3, new Parser("b4+c5").parse());
+		table.setValue(b4, 123);
 
-		assertExpressionError(table, a2);
+		assertExpressionError(table, a3);
 	}
 
 	/**

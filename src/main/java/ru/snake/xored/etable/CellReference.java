@@ -10,11 +10,20 @@ public class CellReference implements Comparable<CellReference> {
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final int MAX_COLUMN = LETTERS.length() - 1;
+	private static final int MIN_ROW = 1;
 	private static final int MAX_ROW = 9;
 
 	private final int column;
 	private final int row;
 
+	/**
+	 * Constructs reference from string. Column indexing starts with A to Z and mapped to indexes from 0 to 25. Row
+	 * indexes starts from 1 to 9 and mapped to row numbers from 0 to 8. Cell reference A1 has column index 0 and row
+	 * index 0, cell reference Z9 has column index 25 and row index 8
+	 * 
+	 * @param reference
+	 *            reference string representation
+	 */
 	public CellReference(String reference) {
 		if (reference.length() != 2) {
 			throw new IllegalArgumentException(
@@ -24,29 +33,38 @@ public class CellReference implements Comparable<CellReference> {
 		int column = LETTERS.indexOf(reference.charAt(0));
 		int row = Integer.parseInt(reference.substring(1));
 
-		if (column < 0 || column >= LETTERS.length()) {
+		if (column < 0 || column > MAX_COLUMN) {
 			throw new IllegalArgumentException(
 					"Column index should be in range from 0 to " + MAX_COLUMN);
 		}
 
-		if (row < 0 || row >= 10) {
+		if (row < MIN_ROW || row > MAX_ROW) {
 			throw new IllegalArgumentException(
-					"Row index should be in range from 0 to " + MAX_ROW);
+					"Row index should be in range from " + MIN_ROW + " to "
+							+ MAX_ROW);
 		}
 
 		this.column = column;
-		this.row = row;
+		this.row = row - MIN_ROW;
 	}
 
+	/**
+	 * Constructs reference from column and row indexes. Column index should be number in range from 0 to 25. Row index
+	 * should be number in range from 0 to 8
+	 * 
+	 * @param column
+	 * @param row
+	 */
 	public CellReference(int column, int row) {
-		if (column < 0 || column >= LETTERS.length()) {
+		if (column < 0 || column > MAX_COLUMN) {
 			throw new IllegalArgumentException(
 					"Column index should be in range from 0 to " + MAX_COLUMN);
 		}
 
-		if (row < 0 || row >= 10) {
+		if (row < 0 || row > MAX_ROW - MIN_ROW) {
 			throw new IllegalArgumentException(
-					"Row index should be in range from 0 to " + MAX_ROW);
+					"Row index should be in range from " + MIN_ROW + " to "
+							+ MAX_ROW);
 		}
 
 		this.column = column;
@@ -114,7 +132,7 @@ public class CellReference implements Comparable<CellReference> {
 		StringBuilder builder = new StringBuilder(2);
 
 		builder.append(LETTERS.charAt(this.column));
-		builder.append(this.row);
+		builder.append(this.row + MIN_ROW);
 
 		return builder.toString();
 	}

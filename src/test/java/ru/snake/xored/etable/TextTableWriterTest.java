@@ -26,33 +26,33 @@ public class TextTableWriterTest {
 	@Test()
 	public void shouldWriteTable2() throws Exception {
 		Table table = new SimpleTable(4, 3);
-		CellReference a0 = new CellReference("A0");
 		CellReference a1 = new CellReference("A1");
 		CellReference a2 = new CellReference("A2");
-		CellReference b0 = new CellReference("B0");
+		CellReference a3 = new CellReference("A3");
 		CellReference b1 = new CellReference("B1");
 		CellReference b2 = new CellReference("B2");
-		CellReference c0 = new CellReference("C0");
+		CellReference b3 = new CellReference("B3");
 		CellReference c1 = new CellReference("C1");
 		CellReference c2 = new CellReference("C2");
-		CellReference d0 = new CellReference("D0");
+		CellReference c3 = new CellReference("C3");
 		CellReference d1 = new CellReference("D1");
 		CellReference d2 = new CellReference("D2");
+		CellReference d3 = new CellReference("D3");
 
-		table.setValue(a0, 12);
-		table.setExpression(b0, new Parser("C1").parse());
-		table.setValue(c0, 3);
-		table.setValue(d0, "Sample");
+		table.setValue(a1, 12);
+		table.setExpression(b1, new Parser("C2").parse());
+		table.setValue(c1, 3);
+		table.setValue(d1, "Sample");
 
-		table.setExpression(a1, new Parser("A0+B0*C0/5").parse());
-		table.setExpression(b1, new Parser("A1*B0").parse());
-		table.setExpression(c1, new Parser("B2-C2").parse());
-		table.setValue(d1, "Spread");
+		table.setExpression(a2, new Parser("A1+B1*C1/5").parse());
+		table.setExpression(b2, new Parser("A2*B1").parse());
+		table.setExpression(c2, new Parser("B3-C3").parse());
+		table.setValue(d2, "Spread");
 
-		table.setValue(a2, "Test");
-		table.setExpression(b2, new Parser("4-3").parse());
-		table.setValue(c2, 5);
-		table.setValue(d2, "Sheet");
+		table.setValue(a3, "Test");
+		table.setExpression(b3, new Parser("4-3").parse());
+		table.setValue(c3, 5);
+		table.setValue(d3, "Sheet");
 
 		SimpleEvaluator.evaluate(table);
 
