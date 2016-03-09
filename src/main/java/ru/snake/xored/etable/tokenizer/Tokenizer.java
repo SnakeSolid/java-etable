@@ -47,13 +47,14 @@ public class Tokenizer {
 			if (this.position < this.text.length() && isAlphabet()) {
 				this.position += 1;
 			} else {
-				throwException("[A-Za-z]");
+				throw new TokenizerException(this.text, this.position,
+						"[A-Za-z]");
 			}
 
 			if (this.position < this.text.length() && isDigit()) {
 				this.position += 1;
 			} else {
-				throwException("[0-9]");
+				throw new TokenizerException(this.text, this.position, "[0-9]");
 			}
 
 			this.tokenType = TokenType.CELL_REFERENCE;
@@ -77,7 +78,8 @@ public class Tokenizer {
 				this.tokenType = TokenType.OPERATION_DIV;
 				this.tokenValue = String.valueOf(TOKEN_DIV);
 			} else {
-				throwException(TOKEN_ADD, TOKEN_SUB, TOKEN_MUL, TOKEN_DIV);
+				throw new TokenizerException(this.text, this.position,
+						TOKEN_ADD, TOKEN_SUB, TOKEN_MUL, TOKEN_DIV);
 			}
 
 			this.position += 1;
@@ -89,10 +91,8 @@ public class Tokenizer {
 
 			return true;
 		} else {
-			throwException("[A-Za-z]", "[0-9]", TOKEN_ADD, TOKEN_SUB, TOKEN_MUL,
-					TOKEN_DIV);
-
-			return false;
+			throw new TokenizerException(this.text, this.position, "[A-Za-z]",
+					"[0-9]", TOKEN_ADD, TOKEN_SUB, TOKEN_MUL, TOKEN_DIV);
 		}
 	}
 
@@ -126,38 +126,6 @@ public class Tokenizer {
 
 	private char currentChar() {
 		return this.text.charAt(this.position);
-	}
-
-	private void throwException(Object... expected) throws TokenizerException {
-		StringBuilder builder = new StringBuilder();
-		boolean isFirst = true;
-
-		builder.append("Incorrect character at position ");
-		builder.append(this.position);
-		builder.append(", expected one of");
-
-		for (Object argument : expected) {
-			if (!isFirst) {
-				builder.append(',');
-
-				isFirst = false;
-			}
-
-			builder.append(' ');
-			builder.append(argument);
-		}
-
-		builder.append(" but ");
-
-		if (this.position < this.text.length()) {
-			builder.append(currentChar());
-		} else {
-			builder.append("end of stream");
-		}
-
-		builder.append(" found.");
-
-		throw new TokenizerException(builder.toString());
 	}
 
 	public String getTokenValue() {
