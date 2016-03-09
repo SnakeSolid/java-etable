@@ -45,9 +45,9 @@ public class Parser {
 				break;
 
 			default:
-				throwException(TokenType.OPERATION_ADD, TokenType.OPERATION_SUB,
+				throw new LexicalParserException(this.tokenizer.getTokenValue(),
+						TokenType.OPERATION_ADD, TokenType.OPERATION_SUB,
 						TokenType.OPERATION_MUL, TokenType.OPERATION_DIV);
-				break;
 			}
 		}
 
@@ -75,15 +75,14 @@ public class Parser {
 			try {
 				reference = new CellReference(this.tokenizer.getTokenValue());
 			} catch (IllegalArgumentException e) {
-				throw new ParserException(e);
+				throw new SyntaxParserException(e);
 			}
 
 			return new ReferenceExpression(reference);
 
 		default:
-			throwException(TokenType.NUMBER, TokenType.CELL_REFERENCE);
-
-			return null;
+			throw new LexicalParserException(this.tokenizer.getTokenValue(),
+					TokenType.NUMBER, TokenType.CELL_REFERENCE);
 		}
 	}
 
@@ -91,32 +90,8 @@ public class Parser {
 		try {
 			return this.tokenizer.nextToken();
 		} catch (TokenizerException e) {
-			throw new ParserException(e);
+			throw new SyntaxParserException(e);
 		}
-	}
-
-	private void throwException(TokenType... expected) throws ParserException {
-		StringBuilder builder = new StringBuilder();
-		boolean isFirst = true;
-
-		builder.append("Incorrect token, expected one of");
-
-		for (Object argument : expected) {
-			if (!isFirst) {
-				builder.append(',');
-
-				isFirst = false;
-			}
-
-			builder.append(' ');
-			builder.append(argument);
-		}
-
-		builder.append(" but ");
-		builder.append(this.tokenizer.getTokenValue());
-		builder.append(" found.");
-
-		throw new ParserException(builder.toString());
 	}
 
 }
