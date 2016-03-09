@@ -4,7 +4,7 @@ import ru.snake.xored.etable.tokenizer.TokenType;
 
 public class LexicalParserException extends ParserException {
 
-	private static final long serialVersionUID = -4217490954340579110L;
+	private static final long serialVersionUID = -2894743581441565730L;
 
 	private final TokenType[] expected;
 	private final String tokenValue;
@@ -22,6 +22,14 @@ public class LexicalParserException extends ParserException {
 
 		this.tokenValue = tokenValue;
 		this.expected = expected;
+	}
+
+	public TokenType[] getExpected() {
+		return expected;
+	}
+
+	public String getTokenValue() {
+		return tokenValue;
 	}
 
 	@Override
